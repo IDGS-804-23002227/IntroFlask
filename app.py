@@ -27,7 +27,7 @@ def user(user):
 
 @app.route("/numero/<int:n>")
 def numero(n):
-    return f"<h1>Numero: {n},</h1>"
+    return f"<h1>Numero: {n}</h1>"
 
 @app.route("/user/<int:id>/<string:username>")
 def username(id,username):
@@ -39,8 +39,8 @@ def suma(n1,n2):
 
 @app.route("/default/")
 @app.route("/default/<string:parm>")
-def func2(param="Juan"):
-    return f"<h1>Hola,{param}</h1>"
+def func2(parm="Juan"):
+    return f"<h1>Hola,{parm}</h1>"
 
 @app.route("/operas")
 def operas():

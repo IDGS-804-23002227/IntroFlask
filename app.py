@@ -25,10 +25,7 @@ def distancia():
         y1 = float(request.form['y1'])
         x2 = float(request.form['x2'])
         y2 = float(request.form['y2'])
-
-        # Fórmula correcta
         distancia = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-
     return render_template("distancia.html", distancia=distancia)
 
 @app.route('/saludo2')

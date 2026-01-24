@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+import math
+
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'
@@ -12,6 +14,22 @@ def index():
 @app.route('/saludo1')
 def saludo1():
     return render_template("saludo1.html")
+
+
+@app.route('/distancia', methods=['GET', 'POST'])
+def distancia():
+    distancia = None
+
+    if request.method == 'POST':
+        x1 = float(request.form['x1'])
+        y1 = float(request.form['y1'])
+        x2 = float(request.form['x2'])
+        y2 = float(request.form['y2'])
+
+        # Fórmula correcta
+        distancia = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+
+    return render_template("distancia.html", distancia=distancia)
 
 @app.route('/saludo2')
 def saludo2():
@@ -57,17 +75,40 @@ def operas():
         <input type="submit" value="Enviar">
     </form>
     '''
-@app.route("/OperasBas")
+@app.route("/OperasBas,")
 def OperasBas():
     return render_template("operasBas.html")
+
+
+@app.route("/operasBas", methods=['GET', 'POST'])
+def operasbas():
+        res = None
+        if request.method == 'POST':           
+          n1=request.form.get('num1')
+          n2=request.form.get('num2')
+
+          if request.form.get('operacion') =='suma':
+              res=float(n1)+float(n2)
+              
+          if request.form.get('operacion') =='resta':
+              res=float(n1)-float(n2)
+              
+          if request.form.get('operacion') =='multiplicar':
+              res=float(n1)* float(n2)
+              
+        if request.form.get('operacion') =='dividir':
+              res=float(n1)/ float(n2)
+              
+
+        return render_template('operasBas.html',res=res,)
+
 
 @app.route("/resultado", methods=['GET', 'POST'])
 def result1():
     n1=request.form.get('num1')
     n2=request.form.get('num2')
-
-    return f"<h1> La suma es: {float(n1)+float(n2)}</h1>"
-
-if __name__ =='__main__':
+    return f"<h1>La suma es: {float(n1)+float(n2)}</h1>"
+    
+if __name__ == '__main__':
     app.run(debug=True)
 

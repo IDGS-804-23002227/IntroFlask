@@ -1,9 +1,30 @@
-{% macro datos(name, placeholder, type='number')%}
- <div class="mb-3">
-        <label for="{{name}}" class="form-label">{{name}}</label>
-        <input type="{{type}}" class="form-control" id="{{name}}" name="{{name}}"
-        placeholder="{{placeholder}}">
-    </div>
+{% macro datos(name, placeholder, type='text') %}
+<div class="mb-3">
+    <label for="{{ name }}" class="form-label">{{ name }}</label>
+    <input type="{{ type }}" class="form-control"
+           id="{{ name }}" name="{{ name }}" placeholder="{{ placeholder }}">
+</div>
+{% endmacro %}
 
+{% macro distancia(nombre, placeholder) %}
+<div class="mb-3">
+    <label class="form-label">{{ placeholder }}</label>
+    <input type="number" step="any" name="{{ nombre }}"
+           class="form-control" required>
+</div>
+{% endmacro %}
 
-{%endmacro%}
+{% macro camposNuevos(campo) %}
+<div class="mb-3">
+    {{ campo.label(class="form-label") }}
+    {{ campo(class="form-control") }}
+
+    {% if campo.errors %}
+    <ul>
+        {% for error in campo.errors %}
+        <li style="color:red">{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endmacro %}

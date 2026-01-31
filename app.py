@@ -128,6 +128,52 @@ def alumnos():
     ape=ape,
     email=email)
     
+@app.route("/cinepolis", methods=["GET", "POST"])
+def cinepolis():
+    total = 0
+    error = None
+    nombre = ""
+    compradores = 1
+    boletas = 0
+    cineco = "no"
+
+    if request.method == "POST":
+        nombre = request.form.get("nombre")
+        compradores = int(request.form.get("compradores", 1))
+        boletas = int(request.form.get("boletas", 0))
+        cineco = request.form.get("cineco")
+        
+        max_permitido = compradores * 7
+        
+        if boletas > max_permitido:
+            error = f"Solo puede comprar hasta 7 boletas por persona ({max_permitido} en total)."
+            total = 0
+        else:
+            precio_boleta = 12
+            subtotal = boletas * precio_boleta
+            
+       
+            if boletas > 5:
+                subtotal *= 0.85  
+            elif 3 <= boletas <= 5:
+                subtotal *= 0.90  
+            
+           
+            if cineco == "si":
+                subtotal *= 0.90  
+            
+            total = subtotal
+
+    return render_template(
+        "cinepolis.html",
+        total=total,
+        error=error,
+        nombre=nombre,
+        compradores=compradores,
+        boletas=boletas,
+        cineco=cineco
+    )
+ 
 if __name__ == '__main__':
     app.run(debug=True)
 
